@@ -1,0 +1,178 @@
+/* Reusing auth-card styles from Login.css */
+.checkbox-container {
+  margin: -0.25rem 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(200, 172, 214, 0.3);
+  border-radius: 8px;
+  background: rgba(46, 35, 108, 0.2);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.25s;
+  backdrop-filter: blur(10px);
+}
+
+.checkbox:hover {
+  border-color: rgba(200, 172, 214, 0.5);
+  background: rgba(67, 61, 139, 0.3);
+}
+
+.checkbox:checked {
+  background: linear-gradient(135deg, #433D8B, #2E236C);
+  border-color: #433D8B;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 0.35rem;
+  height: 0.6rem;
+  border: solid var(--color-button-foreground);
+  border-width: 0 2px 2px 0;
+}
+
+.checkbox-text {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-family: var(--body-font);
+}
+
+.checkbox-text .link {
+  color: #433D8B;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.checkbox-text .link:hover {
+  color: #C8ACD6;
+}
+
+@media (max-width: 640px) {
+  .checkbox-label {
+    gap: 0.5rem;
+  }
+  
+  .checkbox {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  
+  .checkbox-text {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Role selection styles */
+.input-field-wrapper {
+  margin-bottom: 16px;
+}
+
+.role-label {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  font-family: var(--body-font);
+}
+
+.role-select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(46, 35, 108, 0.2);
+  border: 1px solid rgba(200, 172, 214, 0.3);
+  border-radius: 12px;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  font-family: var(--body-font);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.role-select:hover {
+  background: rgba(67, 61, 139, 0.3);
+  border-color: rgba(200, 172, 214, 0.5);
+}
+
+.role-select:focus {
+  outline: none;
+  background: rgba(67, 61, 139, 0.3);
+  border-color: #433D8B;
+  box-shadow: 0 0 0 3px rgba(67, 61, 139, 0.2);
+}
+
+.role-select option {
+  background: #17153B;
+  color: var(--color-text-primary);
+  padding: 0.75rem;
+}
+
+/* Register specific additions */
+.auth-subtitle {
+  color: var(--color-text-secondary);
+  font-family: var(--body-font);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  opacity: 0.95;
+}
+
+.auth-card {
+  padding: 3rem 2.5rem;
+  max-width: 640px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(11,10,20,0.35), rgba(22,16,40,0.25));
+  border: 1px solid rgba(67,61,139,0.12);
+}
+
+.auth-card .auth-form {
+  gap: 1.25rem;
+}
+
+.auth-title {
+  font-size: 2.25rem;
+}
+
+/* Small callout under title */
+.title-accent {
+  width: 56px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-button-gradient-start), var(--color-button-gradient-end));
+  border-radius: 8px;
+  margin: 0.75rem auto 1.25rem;
+  box-shadow: 0 6px 30px rgba(70,102,255,0.12);
+}
+
+/* Error message tuned for contrast */
+.error-message {
+  padding: 0.9rem 1rem;
+  background: rgba(255, 80, 80, 0.06);
+  border: 1px solid rgba(255, 80, 80, 0.14);
+  color: #FFC7C7;
+  border-radius: 12px;
+  font-family: var(--body-font);
+}
+
+@media (max-width: 640px) {
+  .auth-card { padding: 2rem 1.25rem; }
+  .auth-title { font-size: 1.6rem; }
+  .auth-subtitle { font-size: 0.9rem; }
+}

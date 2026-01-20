@@ -1,0 +1,109 @@
+.gradient-button {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  background: linear-gradient(135deg, var(--color-button-gradient-start), var(--color-button-gradient-end));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.gradient-button-primary {
+  background: var(--gradient-secondary);
+  color: var(--color-text-primary);
+  box-shadow: 
+    0 12px 40px rgba(70, 102, 255, 0.4),
+    0 0 50px rgba(21, 96, 189, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-family: var(--font-header);
+}
+
+.gradient-button-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-electric);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gradient-button-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.gradient-button-primary:hover::before {
+  opacity: 1;
+}
+
+.gradient-button-primary:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.gradient-button-primary:hover {
+  box-shadow: var(--shadow-glow-blue);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.gradient-button-secondary {
+  background: var(--glass-bg);
+  color: var(--color-text-primary);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+.gradient-button-secondary:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-bright);
+  box-shadow: 0 0 20px var(--glow-blue);
+}
+
+.gradient-button-secondary:hover::before {
+  opacity: 1;
+}
+
+.gradient-button-primary:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 
+    0 8px 30px rgba(70, 102, 255, 0.35),
+    0 0 40px rgba(21, 96, 189, 0.3);
+}
+
+.gradient-button:active {
+  transform: translateY(0);
+}
