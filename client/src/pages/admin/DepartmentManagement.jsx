@@ -29,11 +29,16 @@ const DepartmentManagement = () => {
                 adminAPI.getInstitutes()
             ]);
 
-            if (deptsRes.success && instRes.success) {
+            if (deptsRes.success) {
                 setDepartments(deptsRes.data);
+            } else {
+                showError('Failed to fetch departments: ' + deptsRes.message);
+            }
+
+            if (instRes.success) {
                 setInstitutes(instRes.data);
             } else {
-                throw new Error(deptsRes.message || instRes.message || 'Failed to fetch data');
+                showError('Failed to fetch institutes: ' + instRes.message);
             }
         } catch (err) {
             showError(err.message || 'Failed to fetch data.');
@@ -51,7 +56,11 @@ const DepartmentManagement = () => {
         if (department) {
             setIsEditing(true);
             setSelectedDepartment(department);
-            setFormData({ name: department.name, description: department.description, institute: department.institute._id });
+            setFormData({ 
+                name: department.name, 
+                description: department.description, 
+                institute: department.institute?._id || ''
+            });
         } else {
             setIsEditing(false);
             setSelectedDepartment(null);
@@ -222,7 +231,9 @@ const DepartmentManagement = () => {
                             className="form-select"
                             required
                         >
-                            <option value="">Select Institute</option>
+                            <option value="">
+                                {institutes.length === 0 ? 'No institutes available' : 'Select Institute'}
+                            </option>
                             {institutes.map(inst => (
                                 <option key={inst._id} value={inst._id}>{inst.name}</option>
                             ))}

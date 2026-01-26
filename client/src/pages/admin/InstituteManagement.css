@@ -24,6 +24,51 @@
   gap: var(--admin-space-lg);
 }
 
+.form-textarea {
+  background: var(--admin-bg-secondary);
+  border: 1px solid rgba(20, 184, 166, 0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--admin-text-primary);
+  font-family: var(--admin-font-family);
+  transition: all 300ms ease-in-out;
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+  background: rgba(20, 184, 166, 0.02);
+}
+
+.form-select {
+  background: var(--admin-bg-secondary);
+  border: 1px solid rgba(20, 184, 166, 0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--admin-text-primary);
+  font-family: var(--admin-font-family);
+  transition: all 300ms ease-in-out;
+  width: 100%;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+  background: rgba(20, 184, 166, 0.02);
+}
+
+.form-select option {
+  background: var(--admin-bg-secondary);
+  color: var(--admin-text-primary);
+}
+
 .image-preview {
   margin-top: var(--admin-space-sm);
   border-radius: var(--admin-radius-md);

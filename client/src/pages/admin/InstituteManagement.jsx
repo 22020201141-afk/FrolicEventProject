@@ -10,6 +10,8 @@ import './InstituteManagement.css';
 
 const InstituteManagement = () => {
     const [institutes, setInstitutes] = useState([]);
+    const [departments, setDepartments] = useState([]);
+    const [coordinators, setCoordinators] = useState([]);
     const [loading, setLoading] = useState(true);
     const { showSuccess, showError } = useToast();
     
@@ -17,7 +19,7 @@ const InstituteManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [selectedInstitute, setSelectedInstitute] = useState(null);
-    const [formData, setFormData] = useState({ name: '', description: '' });
+    const [formData, setFormData] = useState({ name: '', description: '', coordinator: '' });
     const [file, setFile] = useState(null);
 
     const fetchInstitutes = useCallback(async () => {
@@ -36,20 +38,53 @@ const InstituteManagement = () => {
         }
     }, [showError]);
 
+    const fetchCoordinators = useCallback(async () => {
+        try {
+            const response = await adminAPI.getCoordinators();
+            if (response.success) {
+                setCoordinators(response.data.coordinators || []);
+                console.log('Coordinators loaded:', response.data.coordinators?.length || 0);
+            } else {
+                console.error('Failed to fetch coordinators:', response.message);
+                showError('Failed to fetch coordinators: ' + response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching coordinators:', err);
+            showError('Failed to fetch coordinators.');
+        }
+    }, [showError]);
+
+    const fetchDepartments = useCallback(async () => {
+        try {
+            const response = await adminAPI.getDepartments();
+            if (response.success) {
+                setDepartments(response.data);
+            }
+        } catch (err) {
+            showError('Failed to fetch departments.');
+        }
+    }, [showError]);
+
     useEffect(() => {
         fetchInstitutes();
-    }, [fetchInstitutes]);
+        fetchCoordinators();
+        fetchDepartments();
+    }, [fetchInstitutes, fetchCoordinators, fetchDepartments]);
 
     const handleOpenModal = (institute = null) => {
         setIsModalOpen(true);
         if (institute) {
             setIsEditing(true);
             setSelectedInstitute(institute);
-            setFormData({ name: institute.name, description: institute.description });
+            setFormData({ 
+                name: institute.name, 
+                description: institute.description,
+                coordinator: institute.coordinator?._id || ''
+            });
         } else {
             setIsEditing(false);
             setSelectedInstitute(null);
-            setFormData({ name: '', description: '' });
+            setFormData({ name: '', description: '', coordinator: '' });
         }
         setFile(null); // Reset file input
     };
@@ -71,6 +106,9 @@ const InstituteManagement = () => {
         const data = new FormData();
         data.append('name', formData.name);
         data.append('description', formData.description);
+        if (formData.coordinator) {
+            data.append('coordinator', formData.coordinator);
+        }
         if (file) {
             data.append('image', file);
         }
@@ -129,6 +167,17 @@ const InstituteManagement = () => {
         },
         { header: 'Name', accessor: 'name' },
         { header: 'Description', accessor: 'description' },
+        { 
+            header: 'Departments', 
+            render: (institute) => {
+                const deptCount = departments.filter(dept => dept.institute?._id === institute._id).length;
+                return `${deptCount} departments`;
+            }
+        },
+        { 
+            header: 'Coordinator', 
+            render: (institute) => institute.coordinator?.fullName || 'Not Assigned'
+        },
         { 
             header: 'Actions', 
             render: (institute) => (
@@ -201,8 +250,25 @@ const InstituteManagement = () => {
                         />
                     </div>
                     <div className="form-group">
+                        <label className="form-label">Coordinator</label>
+                        <select 
+                            name="coordinator" 
+                            value={formData.coordinator} 
+                            onChange={handleInputChange} 
+                            className="form-input"
+                            required
+                        >
+                            <option value="">Select Coordinator</option>
+                            {coordinators.map(coordinator => (
+                                <option key={coordinator._id} value={coordinator._id}>
+                                    {coordinator.fullName} ({coordinator.email})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
                         <label className="form-label">
-                            <ImageIcon size={16} /> Image
+                            <ImageIcon size={16} /> Image {!isEditing && '*'}
                         </label>
                         <input 
                             type="file" 
@@ -210,6 +276,7 @@ const InstituteManagement = () => {
                             onChange={handleFileChange} 
                             className="form-input"
                             accept="image/*"
+                            required={!isEditing}
                         />
                         {isEditing && selectedInstitute?.image && (
                             <div className="image-preview">

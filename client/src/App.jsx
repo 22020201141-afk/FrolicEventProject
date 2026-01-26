@@ -20,6 +20,8 @@ import UserManagement from './pages/admin/UserManagement';
 import CoordinatorManagement from './pages/admin/CoordinatorManagement';
 import ResultManagement from './pages/admin/ResultManagement';
 import GalleryManagement from './pages/admin/GalleryManagement';
+import InstituteManagement from './pages/admin/InstituteManagement';
+import DepartmentManagement from './pages/admin/DepartmentManagement';
 import AdminRoute from './components/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from './pages/Unauthorized';
@@ -115,6 +117,8 @@ function App() {
         <Route path="/admin" element={<AdminRoute />}>
           <Route path="" element={<AdminLayout />}>
             <Route path="dashboard" element={<ModernDashboard />} />
+            <Route path="institutes" element={<InstituteManagement />} />
+            <Route path="departments" element={<DepartmentManagement />} />
             <Route path="events" element={<EventManagement />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="coordinators" element={<CoordinatorManagement />} />

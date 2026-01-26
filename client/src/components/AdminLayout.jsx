@@ -11,7 +11,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  Building
+  Building,
+  Briefcase
 } from 'lucide-react';
 import { logout, getUser } from '../utils/auth';
 import './AdminLayout.css';
@@ -30,6 +31,7 @@ const AdminLayout = () => {
   const navItems = [
     { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/admin/institutes', icon: Building, label: 'Institutes' },
+    { path: '/admin/departments', icon: Briefcase, label: 'Departments' },
     { path: '/admin/events', icon: Calendar, label: 'Events' },
     { path: '/admin/users', icon: Users, label: 'Users' },
     { path: '/admin/coordinators', icon: Shield, label: 'Coordinators' },

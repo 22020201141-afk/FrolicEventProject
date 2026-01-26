@@ -49,16 +49,27 @@ export const listMyRegistrations = async (req, res, next) => {
     if (!user) return sendError(res, 'Authentication required', 401);
 
     console.log('Fetching registrations for user:', user._id, 'Role:', user.role);
-    const regs = await Registration.find({ userId: user._id });
+    const regs = await Registration.find({ userId: user._id }).populate('eventId');
     console.log('Found registrations:', regs.length);
     const mappedRegs = regs.map(r => ({
       id: r._id,
-      event: { name: 'Event', description: 'Test', isDeleted: false },
+      event: r.eventId ? {
+        _id: r.eventId._id,
+        name: r.eventId.name,
+        description: r.eventId.description,
+        fees: r.eventId.fees,
+        location: r.eventId.location,
+        eventDate: r.eventId.eventDate,
+        images: r.eventId.images,
+        image: r.eventId.image,
+        maxParticipants: r.eventId.maxParticipants,
+        isDeleted: false // Assuming no soft delete, or check if eventId exists
+      } : null,
       paymentStatus: r.paymentStatus,
       status: r.status,
       createdAt: r.createdAt,
       transactionId: r.transactionId
-    }));
+    })).filter(reg => reg.event !== null); // Filter out registrations with deleted events
     console.log('Sending registrations:', JSON.stringify(mappedRegs, null, 2));
     sendSuccess(res, mappedRegs, 'User registrations fetched');
   } catch (error) {
