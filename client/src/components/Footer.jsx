@@ -5,6 +5,19 @@ import './Footer.css';
 const Footer = ({ onNavigate }) => {
   const handleNavClick = (e, destination) => {
     e.preventDefault();
+
+    // Support absolute URLs (e.g., http://localhost:5173/institute)
+    if (typeof destination === 'string' && (destination.startsWith('http://') || destination.startsWith('https://'))) {
+      const origin = window.location.origin;
+      if (destination.startsWith(origin)) {
+        const path = destination.replace(origin, '') || '/';
+        if (onNavigate) onNavigate(path);
+      } else {
+        window.location.href = destination;
+      }
+      return;
+    }
+
     if (onNavigate) {
       const path = destination.startsWith('/') ? destination : `/${destination}`;
       onNavigate(path);
@@ -23,7 +36,7 @@ const Footer = ({ onNavigate }) => {
           <ul>
             <li><a href="#" onClick={(e) => handleNavClick(e, '/')}>Home</a></li>
             <li><a href="#" onClick={(e) => handleNavClick(e, '/events')}>Events</a></li>
-            <li><a href="#" onClick={(e) => handleNavClick(e, '/institutes')}>Institutes</a></li>
+            <li><a href="#" onClick={(e) => handleNavClick(e, 'http://localhost:5173/institute')}>Institutes</a></li>
             <li><a href="#" onClick={(e) => handleNavClick(e, '/about')}>About Us</a></li>
           </ul>
         </div>

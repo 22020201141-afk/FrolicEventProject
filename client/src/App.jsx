@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import MyEvents from './pages/MyEvents';
 import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
+import Gallery from './pages/Gallery';
 import Institutes from './pages/Institutes';
 import Results from './pages/Results';
 import About from './pages/About';
@@ -97,7 +98,9 @@ function App() {
         <Route path="/" element={<Home onNavigate={navigate} />} />
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetail />} />
-        <Route path="/institutes" element={<Institutes />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/institute" element={<Institutes />} />
+        <Route path="/institute/:id" element={<Institutes />} />
         <Route path="/results" element={<Results />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login onNavigateToRegister={() => navigate('/register')} onNavigateToForgotPassword={() => navigate('/forgot-password')} onLoginSuccess={handleLoginSuccess} />} />

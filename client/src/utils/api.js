@@ -97,6 +97,8 @@ export const adminAPI = {
     createDepartment: (data) => api.post('/departments', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
     updateDepartment: (id, data) => api.put(`/departments/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } }),
     deleteDepartment: (id) => api.delete(`/departments/${id}`),
+    // Get departments belonging to a specific institute
+    getDepartmentsByInstitute: (instituteId) => api.get(`/departments/institute/${instituteId}`),
     getEvents: () => api.get('/events'),
     getEventById: (id) => api.get(`/events/${id}`),
     createEvent: (data) => api.post('/events', data, { headers: { 'Content-Type': 'multipart/form-data' } }),

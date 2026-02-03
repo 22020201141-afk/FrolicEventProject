@@ -2,7 +2,7 @@
 .my-events-page-modern {
   min-height: 100vh;
   background: var(--gradient-primary);
-  padding: 140px 20px 80px;
+  padding: 140px 20px 100px;
   position: relative;
   overflow: hidden;
 }
@@ -69,7 +69,7 @@
 /* Header Section */
 .my-events-header-modern {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .header-badge-modern {
@@ -316,9 +316,9 @@
 /* Events Grid */
 .events-grid-modern-my {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
 }
 
 .events-grid-modern-my.list-view {
@@ -339,14 +339,14 @@
 /* Event Card Modern */
 .event-card-modern-my {
   position: relative;
-  background: var(--glass-bg);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-2xl);
+  border: 2px solid rgba(200, 172, 214, 0.3);
+  border-radius: 32px;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
   cursor: pointer;
 }
 
@@ -368,10 +368,10 @@
 }
 
 .event-card-modern-my:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: rgba(14, 165, 233, 0.5);
-  box-shadow: 0 25px 70px rgba(14, 165, 233, 0.35),
-              0 0 100px rgba(70, 102, 255, 0.2);
+  transform: translateY(-12px) scale(1.03);
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 0 25px 70px rgba(102, 126, 234, 0.3),
+              0 0 100px rgba(118, 75, 162, 0.2);
 }
 
 /* Featured Badge */
@@ -491,7 +491,7 @@
 
 /* Event Card Content */
 .event-card-content-modern-my {
-  padding: 2rem;
+  padding: 2.5rem;
   position: relative;
   z-index: 2;
 }
@@ -513,19 +513,19 @@
 /* Event Meta */
 .event-meta-modern-my {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.875rem;
-  margin-bottom: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .meta-item-modern-my {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  padding: 0.625rem 0.875rem;
-  background: rgba(14, 165, 233, 0.05);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  background: rgba(102, 126, 234, 0.08);
+  border: 1.5px solid rgba(200, 172, 214, 0.25);
+  border-radius: 12px;
   color: var(--color-text-secondary);
   font-size: 0.85rem;
   font-family: var(--font-body);
@@ -533,8 +533,8 @@
 }
 
 .meta-item-modern-my:hover {
-  background: rgba(14, 165, 233, 0.1);
-  border-color: rgba(14, 165, 233, 0.3);
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
 }
 
 .meta-item-modern-my svg {
@@ -542,12 +542,11 @@
   flex-shrink: 0;
 }
 
-/* Event Description */
 .event-description-modern-my {
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0 0 2rem 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -561,8 +560,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--glass-border);
+  padding-top: 2rem;
+  border-top: 1.5px solid rgba(200, 172, 214, 0.1);
 }
 
 /* Event Price */
@@ -601,19 +600,19 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-button-gradient-start), var(--color-button-gradient-end));
+  padding: 1rem 1.75rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: var(--radius-full);
-  color: var(--color-button-foreground);
+  border-radius: 25px;
+  color: #fff;
   font-family: var(--font-header);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
 .view-details-button-my::before {
@@ -632,8 +631,9 @@
 }
 
 .view-details-button-my:hover {
-  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.5),
-              0 0 40px rgba(70, 102, 255, 0.3);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5),
+              0 0 40px rgba(118, 75, 162, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Card Glow Effect */

@@ -50,7 +50,21 @@ export default function NavBar({ onNavigate }) {
   const handleNavClick = (destination) => {
     setMobileMenuOpen(false);
     setProfileMenuOpen(false);
-    
+
+    // Support absolute URLs (e.g., http://localhost:5173/institute)
+    if (typeof destination === 'string' && (destination.startsWith('http://') || destination.startsWith('https://'))) {
+      const origin = window.location.origin;
+      if (destination.startsWith(origin)) {
+        // internal absolute URL -> navigate without reload
+        const path = destination.replace(origin, '') || '/';
+        onNavigate(path);
+      } else {
+        // external URL -> full navigation (reload)
+        window.location.href = destination;
+      }
+      return;
+    }
+
     // Handle section anchors for home page
     if (destination.startsWith('#')) {
       const element = document.querySelector(destination);
@@ -79,7 +93,7 @@ export default function NavBar({ onNavigate }) {
     const baseLinks = [
       { label: 'Home', path: isHomePage ? '#home' : '/' },
       { label: 'Events', path: isHomePage ? '#events' : '/events' },
-      { label: 'Institutes', path: isHomePage ? '#institutes' : '/institutes' },
+      { label: 'Gallery', path: '/gallery' },
       { label: 'Results', path: isHomePage ? '#results' : '/results' },
       { label: 'About', path: isHomePage ? '#about' : '/about' }
     ];

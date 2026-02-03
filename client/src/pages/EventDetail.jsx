@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { eventAPI } from '../utils/api';
 import { isAuthenticated, getUser } from '../utils/auth';
 import './EventDetail.css';
 import PaymentModal from '../components/PaymentModal';
+import { 
+  Calendar, MapPin, Users, Clock, DollarSign, 
+  Star, Sparkles, Trophy, Target, Heart, Zap,
+  ChevronRight, ArrowRight, Globe, Award, Flame
+} from 'lucide-react';
 
 const EventDetail = () => {
    const { id } = useParams();
@@ -157,52 +163,186 @@ const EventDetail = () => {
 
   return (
     <div className="event-detail-page">
-      <div className="hero" style={{backgroundImage: `url(${mainImage})`}}>
-        <div className="hero-overlay">
-          <h1>{event.name}</h1>
-          <p>{new Date(event.eventDate).toLocaleString()}</p>
-          <div className="hero-actions">
-            {(() => {
-              const user = getUser();
-              const role = user?.role?.toString?.().toLowerCase?.() || '';
-              const authInitDone = window.__authInitialized === true;
+      {/* Hero Section - Image Only with Register Button */}
+      <motion.div 
+        className="hero-image-only" 
+        style={{backgroundImage: `url(${mainImage})`}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="hero-image-overlay"></div>
+        <motion.div 
+          className="hero-register-button"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          {(() => {
+            const user = getUser();
+            const role = user?.role?.toString?.().toLowerCase?.() || '';
+            const authInitDone = window.__authInitialized === true;
 
-              if (isAuthenticated() && role === 'student') {
-                return !registered ? (
-                  <button className="register-cta" onClick={handleRegister}>Secure Your Spot</button>
-                ) : (
-                  <button className="registered" disabled>You're In</button>
-                );
-              }
+            if (isAuthenticated() && role === 'student') {
+              return !registered ? (
+                <motion.button 
+                  className="register-cta-only" 
+                  onClick={handleRegister}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Sparkles size={20} />
+                  Secure Your Event
+                  <ArrowRight size={20} />
+                </motion.button>
+              ) : (
+                <motion.button 
+                  className="registered-only" 
+                  disabled
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <Trophy size={20} />
+                  You're Registered
+                </motion.button>
+              );
+            }
 
-              // If token exists but profile still loading, show a loading state
-              if (isAuthenticated() && !user && !authInitDone) {
-                return <button className="register-cta" disabled>Preparing...</button>;
-              }
+            if (isAuthenticated() && !user && !authInitDone) {
+              return <button className="register-cta-only" disabled>Preparing...</button>;
+            }
 
-              // If token exists but profile failed to load or user not a student, fall back to login
-              if (!isAuthenticated() || (isAuthenticated() && !user && authInitDone)) {
-                return <button className="register-cta" onClick={() => navigate('/login')}>Sign In to Join</button>;
-              }
+            if (!isAuthenticated() || (isAuthenticated() && !user && authInitDone)) {
+              return (
+                <motion.button 
+                  className="register-cta-only" 
+                  onClick={() => navigate('/login')}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Sign In to Join
+                  <ArrowRight size={20} />
+                </motion.button>
+              );
+            }
 
-              // Default
-              return <button className="register-cta" onClick={() => navigate('/login')}>Sign In to Join</button>;
-            })()}
+            return (
+              <motion.button 
+                className="register-cta-only" 
+                onClick={() => navigate('/login')}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Sign In to Join
+                <ArrowRight size={20} />
+              </motion.button>
+            );
+          })()}
+        </motion.div>
+      </motion.div>
+
+      {/* Enhanced Details Container */}
+      <motion.div 
+        className="detail-container"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="experience-section">
+          <div className="section-header">
+            <motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity }}>
+              <Sparkles size={24} />
+            </motion.div>
+            <h2>The Experience</h2>
+            <motion.div animate={{ rotate: -360 }} transition={{ duration: 4, repeat: Infinity }}>
+              <Sparkles size={24} />
+            </motion.div>
           </div>
+          <p>{event.description}</p>
         </div>
-      </div>
-
-      <div className="detail-container">
-        <h2>The Experience</h2>
-        <p>{event.description}</p>
 
         <div className="detail-grid">
-          <div><strong>Location</strong><p>{event.location}</p></div>
-          <div><strong>Fees</strong><p>₹{event.fees}</p></div>
-          <div><strong>Participants</strong><p>{event.minParticipants} - {event.maxParticipants}</p></div>
-          <div><strong>Registration Ends</strong><p>{new Date(event.registrationEndDate).toLocaleString()}</p></div>
+          <motion.div 
+            className="detail-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ y: -8 }}
+          >
+            <div className="card-icon">
+              <MapPin size={28} />
+            </div>
+            <strong>Location</strong>
+            <p>{event.location}</p>
+            <div className="card-accent"></div>
+          </motion.div>
+          
+          <motion.div 
+            className="detail-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            whileHover={{ y: -8 }}
+          >
+            <div className="card-icon">
+              <DollarSign size={28} />
+            </div>
+            <strong>Entry Fee</strong>
+            <p>₹{event.fees}</p>
+            <div className="card-accent"></div>
+          </motion.div>
+          
+          <motion.div 
+            className="detail-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ y: -8 }}
+          >
+            <div className="card-icon">
+              <Users size={28} />
+            </div>
+            <strong>Participants</strong>
+            <p>{event.minParticipants} - {event.maxParticipants}</p>
+            <div className="card-accent"></div>
+          </motion.div>
+          
+          <motion.div 
+            className="detail-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            whileHover={{ y: -8 }}
+          >
+            <div className="card-icon">
+              <Clock size={28} />
+            </div>
+            <strong>Registration Ends</strong>
+            <p>{new Date(event.registrationEndDate).toLocaleDateString()}</p>
+            <div className="card-accent"></div>
+          </motion.div>
         </div>
-      </div>
+
+        <motion.div 
+          className="additional-info"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <div className="info-card">
+            <Target size={20} />
+            <span>Be part of something extraordinary</span>
+          </div>
+          <div className="info-card">
+            <Globe size={20} />
+            <span>Connect with fellow enthusiasts</span>
+          </div>
+          <div className="info-card">
+            <Award size={20} />
+            <span>Showcase your skills and win prizes</span>
+          </div>
+        </motion.div>
+      </motion.div>
 
       {showPayment && registrationId && (
         <PaymentModal registrationId={registrationId} amount={event.fees} onClose={() => setShowPayment(false)} onSuccess={handlePaymentSuccess} />
